@@ -11,6 +11,14 @@ export default function CameraCapture({ onImageCapture, onClose }: Props) {
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [isStreaming, setIsStreaming] = useState(false);
 
+  const stopCamera = useCallback(() => {
+    if (stream) {
+      stream.getTracks().forEach(track => track.stop());
+      setStream(null);
+      setIsStreaming(false);
+    }
+  }, [stream]);
+
   const startCamera = useCallback(async () => {
     try {
       const mediaStream = await navigator.mediaDevices.getUserMedia({
@@ -31,14 +39,6 @@ export default function CameraCapture({ onImageCapture, onClose }: Props) {
       alert('No se pudo acceder a la cámara. Por favor, permite el acceso o usa la opción de subir archivo.');
     }
   }, []);
-
-  const stopCamera = useCallback(() => {
-    if (stream) {
-      stream.getTracks().forEach(track => track.stop());
-      setStream(null);
-      setIsStreaming(false);
-    }
-  }, [stream]);
 
   const captureImage = useCallback(() => {
     if (videoRef.current && canvasRef.current) {
@@ -61,8 +61,13 @@ export default function CameraCapture({ onImageCapture, onClose }: Props) {
 
   React.useEffect(() => {
     startCamera();
-    return () => stopCamera();
-  }, [startCamera, stopCamera]);
+    // Cleanup al desmontar el componente
+    return () => {
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+      }
+    };
+  }, []); // Sin dependencias para evitar el ciclo infinito
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">

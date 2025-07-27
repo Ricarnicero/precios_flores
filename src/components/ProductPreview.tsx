@@ -91,12 +91,12 @@ export default function ProductPreview({ flowerData, productData, onReset }: Pro
       {/* Vista previa para redes sociales */}
       <div 
         ref={previewRef}
-        className="bg-gradient-to-br from-primary-50 to-pink-50 p-8 rounded-2xl shadow-2xl mx-auto max-w-sm"
-        style={{ width: '400px', minHeight: '500px' }}
+        className="bg-gradient-to-br from-primary-50 to-pink-50 p-6 rounded-2xl shadow-2xl mx-auto max-w-sm"
+        style={{ width: '380px', minHeight: '480px' }}
       >
         {/* Header */}
         <div className="text-center mb-6">
-          <h1 className="text-2xl font-bold text-gray-900 mb-1">
+          <h1 className="text-2xl font-bold text-gray-900 mb-3">
             {productData.name}
           </h1>
           <div className="w-16 h-1 bg-primary-500 mx-auto rounded-full"></div>
@@ -107,22 +107,22 @@ export default function ProductPreview({ flowerData, productData, onReset }: Pro
           <img
             src={productData.image}
             alt={productData.name}
-            className="w-full h-48 object-cover rounded-xl shadow-lg"
+            className="w-full aspect-square object-cover rounded-xl shadow-lg"
           />
         </div>
 
         {/* Descripción */}
-        <div className="mb-6">
-          <p className="text-gray-700 text-center leading-relaxed">
+        <div className="mb-5">
+          <p className="text-gray-700 text-center leading-relaxed text-sm">
             {productData.description}
           </p>
         </div>
 
         {/* Precio */}
-        <div className="text-center mb-6">
-          <div className="bg-white rounded-xl p-4 shadow-md border-2 border-primary-200">
-            <p className="text-primary-600 text-sm font-medium mb-1">Precio de Venta</p>
-            <p className="text-3xl font-bold text-primary-900">
+        <div className="text-center mb-5">
+          <div className="bg-white rounded-xl p-3 shadow-md border-2 border-primary-200">
+            <p className="text-primary-600 text-xs font-medium mb-1">Precio de Venta</p>
+            <p className="text-2xl font-bold text-primary-900">
               ${formatPrice(productData.salePrice)}
             </p>
           </div>
